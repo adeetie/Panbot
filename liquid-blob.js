@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 /* ------------------------------------------------------------------
    Tweak these to play with size / shape / motion / look.
@@ -19,12 +18,13 @@ const CONFIG = {
   stretchSpeed: 0.3,
 
   // look
-  color: 0x020202,
-  roughness: 0.48,        // lower = sharper reflections
-  clearcoat: 0.2,         // glossy lacquer layer
+  color: 0x010101,
+  roughness: 0.38,        // lower = sharper, smaller highlights; higher = softer, wider
+  clearcoat: 0.0,         // glossy lacquer layer (0 = satin)
   clearcoatRoughness: 0.4,
-  envIntensity: 0.14,     // studio reflection strength
-  keyLight: 0.6,          // top-right highlight strength
+  studioLights: 1.8,      // brightness of the softbox panels reflected in the blob
+  envIntensity: 1.0,      // overall reflection strength
+  keyLight: 0.25,         // extra direct highlight from top-right
 
   cameraDistance: 3.4,
   fov: 35,
@@ -129,6 +129,24 @@ const NORMAL_GLSL = /* glsl */ `
   if (dot(objectNormal, blobDir) < 0.0) objectNormal = -objectNormal;
 `;
 
+// A black room with a few softbox panels. Reflections of these are the only
+// highlights, so the body stays black (a bright room would gray it out).
+function createDarkStudio(brightness) {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x000000);
+  const panel = (w, h, intensity, pos) => {
+    const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(1, 1, 1).multiplyScalar(intensity * brightness), side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+    mesh.position.set(...pos);
+    mesh.lookAt(0, 0, 0);
+    scene.add(mesh);
+  };
+  panel(6, 3, 1.6, [0.5, 5, 1.5]);   // big top softbox
+  panel(1.2, 5, 1.0, [5, 0.5, 1]);   // tall strip on the right
+  panel(1, 3, 0.45, [-4.5, -1, -2]); // faint rim from back-left
+  return scene;
+}
+
 class LiquidBlob {
   constructor(canvas, opts = {}) {
     this.canvas = canvas;
@@ -154,8 +172,10 @@ class LiquidBlob {
 
     this.scene = new THREE.Scene();
     const pmrem = new THREE.PMREMGenerator(this.renderer);
-    this.envTexture = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    const studio = createDarkStudio(c.studioLights);
+    this.envTexture = pmrem.fromScene(studio, 0.02).texture;
     this.scene.environment = this.envTexture;
+    studio.traverse((o) => { o.geometry?.dispose(); o.material?.dispose(); });
     pmrem.dispose();
 
     this.camera = new THREE.PerspectiveCamera(c.fov, 1, 0.1, 100);
