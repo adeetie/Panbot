@@ -1,4 +1,4 @@
-# Scrapped Films - Portfolio Website
+# Panbot - Portfolio Website
 
 A stunning, cinematic portfolio website showcasing video design work with a premium monochrome aesthetic.
 
@@ -23,7 +23,7 @@ A stunning, cinematic portfolio website showcasing video design work with a prem
 
 ## 🚀 Live Demo
 
-Visit the live website: [Scrapped Films Portfolio](https://YOUR_USERNAME.github.io/YOUR_REPOSITORY_NAME)
+Visit the live website: [Panbot Portfolio](https://YOUR_USERNAME.github.io/YOUR_REPOSITORY_NAME)
 
 ## 🛠️ Technologies Used
 
@@ -79,10 +79,10 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 👤 Author
 
-**Scrapped Films**
+**Panbot**
 - Website: [Live Demo](https://YOUR_USERNAME.github.io/YOUR_REPOSITORY_NAME)
 - Contact: [Get in Touch](https://cal.com/)
 
 ---
 
-© 2025 Scrapped Films. All Rights Reserved.
+© 2025 Panbot. All Rights Reserved.
