@@ -28,7 +28,7 @@ body{margin:0;background:#000;color:#fff;font-family:Inter,system-ui,-apple-syst
 
 /* Background silk */
 .silk-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#0a0a0a,#111 30%,#1a1a1a)}
-.silk-gif{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1400px,80vw);height:auto;opacity:.32;filter:brightness(.9) contrast(1.05) saturate(0.95)}
+.silk-gif{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1400px,80vw);aspect-ratio:1/1;height:auto;display:block;opacity:.32;filter:brightness(.9) contrast(1.05) saturate(0.95)}
 .silk-overlay{position:absolute;inset:0;background:radial-gradient(120% 120% at 50% 20%,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 55%),linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.2) 40%,rgba(0,0,0,.4));pointer-events:none}
 /* Preloader + Splash brand (restored) */
 #preloader{position:fixed;inset:0;background:#000;z-index:9999;opacity:1;visibility:visible;transition:opacity .5s ease,visibility .5s ease}
